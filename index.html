@@ -1,85 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>La Conception College - Student Information Management System</title>
+<title>Student Information Management System</title>
 <style>
-  body { font-family: Arial, sans-serif; margin: 15px; background: #eef2f7; }
-  .box { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 820px; margin: auto; }
-  .auth-box { max-width: 400px; margin: 30px auto; overflow: hidden; padding-top: 0; }
-  .banner-wrap { margin: 0 -20px 15px -20px; background: #003380; text-align: center; }
-  .banner-img { width: 100%; max-height: 180px; object-fit: cover; display: block; }
-  .header-logo { width: 65px; height: 65px; object-fit: cover; border-radius: 8px; border: 2px solid #0056b3; }
-  .brand-flex { display: flex; align-items: center; gap: 12px; }
-  input, button { padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 14px; }
-  .auth-box input { width: 100%; box-sizing: border-box; }
-  .auth-box button { width: 100%; margin-top: 8px; }
-  button { background: #004494; color: white; border: none; font-weight: bold; cursor: pointer; touch-action: manipulation; }
-  button:active { transform: scale(0.98); }
+  body { font-family: Arial, sans-serif; margin: 15px; background: #f4f4f9; }
+  .box { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+  input, button { padding: 8px; margin: 4px 0; border-radius: 4px; border: 1px solid #ccc; }
+  button { background: #0056b3; color: white; border: none; font-weight: bold; cursor: pointer; }
   .btn-warn { background: #e0a800; color: black; }
   .btn-del { background: #dc3545; }
   .btn-sec { background: #6c757d; }
-  .btn-success { background: #28a745; }
-  #msg, #authMsg { padding: 10px; margin: 10px 0; border-radius: 5px; display: none; font-weight: bold; font-size: 14px; }
-  .school-header { text-align: center; color: #004494; margin-bottom: 2px; font-size: 20px; font-weight: bold; }
-  .school-motto { text-align: center; color: #555; font-style: italic; font-size: 12px; margin-bottom: 12px; }
-  .topbar { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 12px; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
-  .topbar h3 { margin: 0; color: #004494; font-size: 19px; }
-  .topbar small { display: block; color: #555; font-size: 13px; }
-  .user-info { font-size: 14px; color: #333; display: flex; align-items: center; gap: 10px; }
+  #msg { padding: 10px; margin: 10px 0; border-radius: 4px; display: none; font-weight: bold; }
   table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
   th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-  th { background: #004494; color: white; }
-  .log { background: #222; color: #0f0; padding: 8px; font-family: monospace; font-size: 12px; height: 80px; overflow-y: auto; border-radius: 4px; }
-  .toggle-wrap { text-align: center; margin-top: 14px; font-size: 14px; }
-  .btn-link { background: none; border: none; color: #004494; text-decoration: underline; font-weight: bold; padding: 6px; cursor: pointer; font-size: 14px; width: auto !important; display: inline; }
-  .hidden { display: none !important; }
+  th { background: #0056b3; color: white; }
+  .log { background: #222; color: #0f0; padding: 8px; font-family: monospace; font-size: 12px; height: 80px; overflow-y: auto; }
 </style>
 </head>
 <body>
-
-<div class="box auth-box" id="authSection">
-  <div class="banner-wrap">
-    <img src="images (3).jpeg" alt="La Conception College" class="banner-img" onerror="this.style.display='none'">
-  </div>
-  <div class="school-header">La Conception College</div>
-  <div class="school-motto">"Changing Lives for the Better YOU"</div>
-  <h4 id="authTitle" style="text-align:center; margin: 8px 0 12px 0; color:#333;">Student Information Management System</h4>
-  <div id="authMsg"></div>
-
-  <div id="regNameGroup" class="hidden">
-    <input type="text" id="regFullName" placeholder="Full Name">
-  </div>
-  <input type="text" id="authUser" placeholder="Username">
-  <input type="password" id="authPass" placeholder="Password">
-  
-  <button type="button" id="btnAuthSubmit" onclick="handleAuthSubmit()">Log In</button>
-  
-  <div class="toggle-wrap">
-    <span id="toggleText">Don't have an account?</span>
-    <button type="button" class="btn-link" id="toggleAuthMode" onclick="toggleMode()">Register here</button>
-  </div>
-  <p style="font-size: 12px; color: #666; text-align: center; margin-top: 15px;">
-    Demo Account: <b>admin</b> / <b>1234</b>
-  </p>
-</div>
-
-<div class="box hidden" id="mainSystem">
-  <div class="topbar">
-    <div class="brand-flex">
-      <img src="images (3).jpeg" alt="LCC Logo" class="header-logo" onerror="this.style.display='none'">
-      <div>
-        <h3>La Conception College</h3>
-        <small>Student Information Management System</small>
-      </div>
-    </div>
-    <div class="user-info">
-      <span id="currentUserDisplay">Welcome!</span>
-      <button type="button" class="btn-del" onclick="handleLogout()">Logout</button>
-    </div>
-  </div>
-
+<div class="box">
+  <h3>Student Information Management System</h3>
   <div id="msg"></div>
 
   <input type="text" id="sid" placeholder="Student ID (e.g. 20241762)">
@@ -87,18 +28,18 @@
   <input type="text" id="scourse" placeholder="Course (e.g. BSIS 2A)">
   <input type="number" id="sgwa" step="0.01" placeholder="GWA (1.00 - 5.00)">
   <br>
-  <button type="button" onclick="addRec()">Add Student</button>
-  <button type="button" class="btn-warn" onclick="updateRec()">Update Existing</button>
+  <button id="btnAdd">Add Student</button>
+  <button id="btnUpdate" class="btn-warn">Update Existing</button>
 
   <hr>
   <input type="text" id="q" placeholder="Search ID or Name">
   <br>
-  <button type="button" onclick="hashSearch()">Search ID (Hash Table)</button>
-  <button type="button" onclick="linearSearch()">Search Name (Linear)</button>
-  <button type="button" onclick="sortName()">Sort Name (Bubble)</button>
-  <button type="button" onclick="sortGwa()">Sort GWA (Bubble)</button>
-  <button type="button" onclick="showAll(); notify('Showing all records', false);">Show All</button>
-  <button type="button" class="btn-sec" onclick="resetStorage()">Reset Default Data</button>
+  <button id="btnHash">Search ID (Hash Table)</button>
+  <button id="btnLinear">Search Name (Linear)</button>
+  <button id="btnSortName">Sort Name (Bubble)</button>
+  <button id="btnSortGwa">Sort GWA (Bubble)</button>
+  <button id="btnShowAll">Show All</button>
+  <button id="btnReset" class="btn-sec">Reset Default Data</button>
 
   <table>
     <thead>
@@ -108,119 +49,230 @@
   </table>
 
   <h4>Activity History (Stack - LIFO)</h4>
-  <button type="button" onclick="undoDel()">Undo Last Delete (Pop)</button>
+  <button id="btnUndo">Undo Last Delete (Pop)</button>
   <div class="log" id="log"></div>
 </div>
 
 <script>
-var memStore = {};
-function safeGet(k) {
-  try { return localStorage.getItem(k); } catch (e) { return memStore[k] || null; }
-}
-function safeSet(k, v) {
-  try { localStorage.setItem(k, v); } catch (e) { memStore[k] = v; }
-}
-function safeRemove(k) {
-  try { localStorage.removeItem(k); } catch (e) { delete memStore[k]; }
-}
+// @ts-nocheck
+let arr = [];
+let map = new Map();
+let delStack = [];
+let logStack = [];
 
-var isRegisterMode = false;
-var users = JSON.parse(safeGet("sims_users_v1")) || [
-  { fullName: "System Admin", username: "admin", password: "1234" }
-];
-
-var arr = [];
-var map = new Map();
-var delStack = [];
-var logStack = [];
-
-var defaultData = [
-  { id: "20241762", name: "Elijah Gabriel P. Gelle", course: "BSIS 2A", gwa: 1.25 },
-  { id: "20241801", name: "Christian Gelle", course: "BSIS 2A", gwa: 1.50 },
-  { id: "20241802", name: "Adelfa Irene P. Gelle", course: "BSIS 2A", gwa: 1.25 }
-];
-
-function saveUsers() {
-  safeSet("sims_users_v1", JSON.stringify(users));
+function saveData() {
+  localStorage.setItem("sims_records_v3", JSON.stringify(arr));
+  localStorage.setItem("sims_logs_v3", JSON.stringify(logStack));
 }
 
-function authNotify(text, isErr) {
-  var m = document.getElementById("authMsg");
+function notify(text, isErr) {
+  const m = document.getElementById("msg");
+  if (!m) return;
   m.style.display = "block";
   m.style.background = isErr ? "#f8d7da" : "#d4edda";
   m.style.color = isErr ? "#721c24" : "#155724";
   m.innerText = text;
 }
 
-function toggleMode() {
-  isRegisterMode = !isRegisterMode;
-  document.getElementById("authMsg").style.display = "none";
-  document.getElementById("authTitle").innerText = isRegisterMode ? "Create New Account" : "Student Information Management System";
-  document.getElementById("btnAuthSubmit").innerText = isRegisterMode ? "Register Account" : "Log In";
-  document.getElementById("btnAuthSubmit").className = isRegisterMode ? "btn-success" : "";
-  document.getElementById("regNameGroup").classList.toggle("hidden", !isRegisterMode);
-  document.getElementById("toggleText").innerText = isRegisterMode ? "Already have an account?" : "Don't have an account?";
-  document.getElementById("toggleAuthMode").innerText = isRegisterMode ? "Log in here" : "Register here";
+function addLog(txt) {
+  logStack.push(txt);
+  const logEl = document.getElementById("log");
+  if (logEl) logEl.innerHTML = logStack.slice().reverse().join("<br>");
+  saveData();
 }
 
-function handleAuthSubmit() {
-  var user = document.getElementById("authUser").value.trim();
-  var pass = document.getElementById("authPass").value.trim();
-
-  if (isRegisterMode) {
-    var fullName = document.getElementById("regFullName").value.trim();
-    if (!fullName || !user || !pass) {
-      authNotify("Error: Please fill in all fields!", true);
-      return;
-    }
-    var exists = users.some(function(u) { return u.username.toLowerCase() === user.toLowerCase(); });
-    if (exists) {
-      authNotify("Error: That username is already taken!", true);
-      return;
-    }
-    users.push({ fullName: fullName, username: user, password: pass });
-    saveUsers();
-    authNotify("Account created! You can now log in.", false);
-    toggleMode();
-  } else {
-    if (!user || !pass) {
-      authNotify("Error: Please enter your username and password!", true);
-      return;
-    }
-    var found = users.find(function(u) { return u.username === user && u.password === pass; });
-    if (!found) {
-      authNotify("Error: Invalid username or password!", true);
-      return;
-    }
-    safeSet("sims_session_v1", JSON.stringify(found));
-    enterSystem(found);
+function showAll(list = arr) {
+  const tb = document.getElementById("tbody");
+  if (!tb) return;
+  tb.innerHTML = "";
+  for (let i = 0; i < list.length; i++) {
+    const s = list[i];
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${s.id}</td><td>${s.name}</td><td>${s.course}</td><td>${s.gwa.toFixed(2)}</td>
+      <td>
+        <button class="edit-btn">Edit</button>
+        <button class="btn-del del-btn">Del</button>
+      </td>
+    `;
+    tr.querySelector(".edit-btn").addEventListener("click", () => editForm(s.id));
+    tr.querySelector(".del-btn").addEventListener("click", () => delRec(s.id));
+    tb.appendChild(tr);
   }
 }
 
-function enterSystem(userObj) {
-  document.getElementById("authSection").classList.add("hidden");
-  document.getElementById("mainSystem").classList.remove("hidden");
-  document.getElementById("currentUserDisplay").innerText = "User: " + userObj.fullName;
-  loadData();
+function addRec() {
+  const id = document.getElementById("sid").value.trim();
+  const name = document.getElementById("sname").value.trim();
+  const course = document.getElementById("scourse").value.trim();
+  const gwa = parseFloat(document.getElementById("sgwa").value);
+
+  if (!id || !name || !course || isNaN(gwa)) return notify("Error: Fill all fields!", true);
+  if (gwa < 1.0 || gwa > 5.0) return notify("Error: GWA must be 1.00 to 5.00!", true);
+  if (map.has(id)) return notify("Error: Duplicate Student ID!", true);
+
+  const obj = { id, name, course, gwa };
+  arr.push(obj);
+  map.set(id, obj);
+  addLog("[ADD] " + id + " - " + name);
+  notify("Added & Saved: " + name, false);
+  clearF();
+  showAll();
 }
 
-function handleLogout() {
-  safeRemove("sims_session_v1");
-  document.getElementById("mainSystem").classList.add("hidden");
-  document.getElementById("authSection").classList.remove("hidden");
-  document.getElementById("authUser").value = "";
-  document.getElementById("authPass").value = "";
-  authNotify("You have been logged out.", false);
+function updateRec() {
+  const id = document.getElementById("sid").value.trim();
+  const name = document.getElementById("sname").value.trim();
+  const course = document.getElementById("scourse").value.trim();
+  const gwa = parseFloat(document.getElementById("sgwa").value);
+
+  const obj = map.get(id);
+  if (!obj) return notify("Error: ID not found!", true);
+  if (!name || !course || isNaN(gwa) || gwa < 1.0 || gwa > 5.0) return notify("Error: Invalid inputs!", true);
+
+  obj.name = name;
+  obj.course = course;
+  obj.gwa = gwa;
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].id === id) arr[i] = obj;
+  }
+  addLog("[UPDATE] " + id + " - " + name);
+  notify("Updated & Saved: " + name, false);
+  clearF();
+  showAll();
 }
 
-function saveData() {
-  safeSet("sims_records_v4", JSON.stringify(arr));
-  safeSet("sims_logs_v4", JSON.stringify(logStack));
+function delRec(id) {
+  const s = map.get(id);
+  if (!s) return;
+  delStack.push(s);
+  map.delete(id);
+  arr = arr.filter(x => x.id !== id);
+  addLog("[DELETE] " + id + " - " + s.name);
+  notify("Deleted ID: " + id + " (Click Undo to restore)", true);
+  showAll();
 }
 
-function loadData() {
-  var savedRecs = safeGet("sims_records_v4");
-  var savedLogs = safeGet("sims_logs_v4");
+function undoDel() {
+  const s = delStack.pop();
+  if (!s) return notify("Error: Stack is empty!", true);
+  arr.push(s);
+  map.set(s.id, s);
+  addLog("[RESTORE] " + s.id + " - " + s.name);
+  notify("Restored & Saved: " + s.name, false);
+  showAll();
+}
 
-  arr = savedRecs ? JSON.parse(savedRecs) : defaultData.map(function(item) {
-    return { id: item.id, name: item.name, course: item.course, gwa: item.gwa };
+function hashSearch() {
+  const q = document.getElementById("q").value.trim();
+  if (!q) return notify("Enter ID to search!", true);
+  const found = map.get(q);
+  if (found) {
+    showAll([found]);
+    addLog("[HASH SEARCH] Found " + q);
+    notify("Found ID: " + q, false);
+  } else {
+    notify("Record not found!", true);
+  }
+}
+
+function linearSearch() {
+  const q = document.getElementById("q").value.trim().toLowerCase();
+  if (!q) return notify("Enter Name to search!", true);
+  const res = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].name.toLowerCase().includes(q)) res.push(arr[i]);
+  }
+  if (res.length > 0) {
+    showAll(res);
+    addLog("[LINEAR SEARCH] Matched: " + res.length);
+    notify("Found " + res.length + " record(s)", false);
+  } else {
+    notify("No matching name found!", true);
+  }
+}
+
+function sortName() {
+  for (let i = 0; i < arr.length - 1; i++) {
+    for (let j = 0; j < arr.length - i - 1; j++) {
+      if (arr[j].name.toLowerCase() > arr[j + 1].name.toLowerCase()) {
+        const t = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = t;
+      }
+    }
+  }
+  addLog("[BUBBLE SORT] Sorted by Name");
+  notify("Sorted by Name (A-Z)", false);
+  showAll();
+}
+
+function sortGwa() {
+  for (let i = 0; i < arr.length - 1; i++) {
+    for (let j = 0; j < arr.length - i - 1; j++) {
+      if (arr[j].gwa > arr[j + 1].gwa) {
+        const t = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = t;
+      }
+    }
+  }
+  addLog("[BUBBLE SORT] Sorted by GWA");
+  notify("Sorted by GWA (Highest First)", false);
+  showAll();
+}
+
+function editForm(id) {
+  const s = map.get(id);
+  if (!s) return;
+  document.getElementById("sid").value = s.id;
+  document.getElementById("sname").value = s.name;
+  document.getElementById("scourse").value = s.course;
+  document.getElementById("sgwa").value = String(s.gwa);
+  notify("Editing ID: " + id, false);
+}
+
+function clearF() {
+  document.getElementById("sid").value = "";
+  document.getElementById("sname").value = "";
+  document.getElementById("scourse").value = "";
+  document.getElementById("sgwa").value = "";
+}
+
+function resetStorage() {
+  localStorage.removeItem("sims_records_v3");
+  localStorage.removeItem("sims_logs_v3");
+  location.reload();
+}
+
+document.getElementById("btnAdd").addEventListener("click", addRec);
+document.getElementById("btnUpdate").addEventListener("click", updateRec);
+document.getElementById("btnHash").addEventListener("click", hashSearch);
+document.getElementById("btnLinear").addEventListener("click", linearSearch);
+document.getElementById("btnSortName").addEventListener("click", sortName);
+document.getElementById("btnSortGwa").addEventListener("click", sortGwa);
+document.getElementById("btnShowAll").addEventListener("click", () => showAll());
+document.getElementById("btnReset").addEventListener("click", resetStorage);
+document.getElementById("btnUndo").addEventListener("click", undoDel);
+
+const savedRecords = localStorage.getItem("sims_records_v3");
+const savedLogs = localStorage.getItem("sims_logs_v3");
+
+if (savedRecords) {
+  arr = JSON.parse(savedRecords);
+  arr.forEach(s => map.set(s.id, s));
+  logStack = savedLogs ? JSON.parse(savedLogs) : [];
+  document.getElementById("log").innerHTML = logStack.slice().reverse().join("<br>");
+} else {
+  const init = [
+    { id: "20241762", name: "Elijah Gabriel P. Gelle", course: "BSIS 2A", gwa: 1.25 },
+    { id: "20241801", name: "Christian Gelle", course: "BSIS 2A", gwa: 1.50 },
+    { id: "20241802", name: "Adelfa Irene P. Gelle", course: "BSIS 2A", gwa: 1.25 }
+  ];
+  init.forEach(s => { arr.push(s); map.set(s.id, s); });
+  addLog("[SYSTEM] Loaded 3 initial records");
+}
+showAll();
+</script>
+</body>
+</html>
