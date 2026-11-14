@@ -39,7 +39,6 @@
 </head>
 <body>
 
-<!-- LOGIN & REGISTER SCREEN -->
 <div class="box auth-box" id="authSection">
   <div class="banner-wrap">
     <img src="images (3).jpeg" alt="La Conception College" class="banner-img" onerror="this.style.display='none'">
@@ -66,7 +65,6 @@
   </p>
 </div>
 
-<!-- MAIN STUDENT MANAGEMENT SYSTEM -->
 <div class="box hidden" id="mainSystem">
   <div class="topbar">
     <div class="brand-flex">
@@ -115,7 +113,7 @@
 </div>
 
 <script>
-const memStore = {};
+var memStore = {};
 function safeGet(k) {
   try { return localStorage.getItem(k); } catch (e) { return memStore[k] || null; }
 }
@@ -126,17 +124,17 @@ function safeRemove(k) {
   try { localStorage.removeItem(k); } catch (e) { delete memStore[k]; }
 }
 
-let isRegisterMode = false;
-let users = JSON.parse(safeGet("sims_users_v1")) || [
+var isRegisterMode = false;
+var users = JSON.parse(safeGet("sims_users_v1")) || [
   { fullName: "System Admin", username: "admin", password: "1234" }
 ];
 
-let arr = [];
-let map = new Map();
-let delStack = [];
-let logStack = [];
+var arr = [];
+var map = new Map();
+var delStack = [];
+var logStack = [];
 
-const defaultData = [
+var defaultData = [
   { id: "20241762", name: "Elijah Gabriel P. Gelle", course: "BSIS 2A", gwa: 1.25 },
   { id: "20241801", name: "Christian Gelle", course: "BSIS 2A", gwa: 1.50 },
   { id: "20241802", name: "Adelfa Irene P. Gelle", course: "BSIS 2A", gwa: 1.25 }
@@ -147,7 +145,7 @@ function saveUsers() {
 }
 
 function authNotify(text, isErr) {
-  const m = document.getElementById("authMsg");
+  var m = document.getElementById("authMsg");
   m.style.display = "block";
   m.style.background = isErr ? "#f8d7da" : "#d4edda";
   m.style.color = isErr ? "#721c24" : "#155724";
@@ -166,24 +164,34 @@ function toggleMode() {
 }
 
 function handleAuthSubmit() {
-  const user = document.getElementById("authUser").value.trim();
-  const pass = document.getElementById("authPass").value.trim();
+  var user = document.getElementById("authUser").value.trim();
+  var pass = document.getElementById("authPass").value.trim();
 
   if (isRegisterMode) {
-    const fullName = document.getElementById("regFullName").value.trim();
-    if (!fullName || !user || !pass) return authNotify("Error: Please fill in all fields!", true);
-    if (users.some(u => u.username.toLowerCase() === user.toLowerCase())) {
-      return authNotify("Error: That username is already taken!", true);
+    var fullName = document.getElementById("regFullName").value.trim();
+    if (!fullName || !user || !pass) {
+      authNotify("Error: Please fill in all fields!", true);
+      return;
     }
-    users.push({ fullName, username: user, password: pass });
+    var exists = users.some(function(u) { return u.username.toLowerCase() === user.toLowerCase(); });
+    if (exists) {
+      authNotify("Error: That username is already taken!", true);
+      return;
+    }
+    users.push({ fullName: fullName, username: user, password: pass });
     saveUsers();
     authNotify("Account created! You can now log in.", false);
     toggleMode();
   } else {
-    if (!user || !pass) return authNotify("Error: Please enter your username and password!", true);
-    const found = users.find(u => u.username === user && u.password === pass);
-    if (!found) return authNotify("Error: Invalid username or password!", true);
-
+    if (!user || !pass) {
+      authNotify("Error: Please enter your username and password!", true);
+      return;
+    }
+    var found = users.find(function(u) { return u.username === user && u.password === pass; });
+    if (!found) {
+      authNotify("Error: Invalid username or password!", true);
+      return;
+    }
     safeSet("sims_session_v1", JSON.stringify(found));
     enterSystem(found);
   }
@@ -211,11 +219,8 @@ function saveData() {
 }
 
 function loadData() {
-  const savedRecs = safeGet("sims_records_v4");
-  const savedLogs = safeGet("sims_logs_v4");
+  var savedRecs = safeGet("sims_records_v4");
+  var savedLogs = safeGet("sims_logs_v4");
 
-  arr = savedRecs ? JSON.parse(savedRecs) : defaultData.map(item => ({ ...item }));
-  map.clear();
-  arr.forEach(s => map.set(s.id, s));
-
-  if (savedLogs) {
+  arr = savedRecs ? JSON.parse(savedRecs) : defaultData.map(function(item) {
+    return { id: item.id, name: item.name, course: item.course, gwa: item.gwa };
