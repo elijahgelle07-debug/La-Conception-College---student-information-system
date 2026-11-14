@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Conception College - Student Information Management System</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 15px; background: #eef2f7; }
+  .box { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 820px; margin: auto; }
+  .auth-box { max-width: 400px; margin: 30px auto; overflow: hidden; padding-top: 0; }
+  .banner-wrap { margin: 0 -20px 15px -20px; background: #003380; text-align: center; }
+  .banner-img { width: 100%; max-height: 180px; object-fit: cover; display: block; }
+  .header-logo { width: 65px; height: 65px; object-fit: cover; border-radius: 8px; border: 2px solid #0056b3; }
+  .brand-flex { display: flex; align-items: center; gap: 12px; }
+  input, button { padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 14px; }
+  .auth-box input { width: 100%; box-sizing: border-box; }
+  .auth-box button { width: 100%; margin-top: 8px; }
+  button { background: #004494; color: white; border: none; font-weight: bold; cursor: pointer; }
+  button:hover { opacity: 0.92; }
+  .btn-warn { background: #e0a800; color: black; }
+  .btn-del { background: #dc3545; }
+  .btn-sec { background: #6c757d; }
+  .btn-success { background: #28a745; }
+  #msg, #authMsg { padding: 10px; margin: 10px 0; border-radius: 5px; display: none; font-weight: bold; font-size: 14px; }
+  .school-header { text-align: center; color: #004494; margin-bottom: 2px; font-size: 20px; font-weight: bold; }
+  .school-motto { text-align: center; color: #555; font-style: italic; font-size: 12px; margin-bottom: 12px; }
+  .topbar { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 12px; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
+  .topbar h3 { margin: 0; color: #004494; font-size: 19px; }
+  .topbar small { display: block; color: #555; font-size: 13px; }
+  .user-info { font-size: 14px; color: #333; display: flex; align-items: center; gap: 10px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+  th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+  th { background: #004494; color: white; }
+  .log { background: #222; color: #0f0; padding: 8px; font-family: monospace; font-size: 12px; height: 80px; overflow-y: auto; border-radius: 4px; }
+  .toggle-wrap { text-align: center; margin-top: 14px; font-size: 14px; }
+  .btn-link { background: none; border: none; color: #004494; text-decoration: underline; font-weight: bold; padding: 4px 6px; cursor: pointer; font-size: 14px; width: auto !important; display: inline; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+
+<div class="box auth-box" id="authSection">
+  <div class="banner-wrap">
+    <img src="logo.png" alt="La Conception College" class="banner-img" onerror="this.style.display='none'">
+  </div>
+  <div class="school-header">La Conception College</div>
+  <div class="school-motto">"Changing Lives for the Better YOU"</div>
+  <h4 id="authTitle" style="text-align:center; margin: 8px 0 12px 0; color:#333;">Student Information Management System</h4>
+  <div id="authMsg"></div>
+
+  <div id="regNameGroup" class="hidden">
+    <input type="text" id="regFullName" placeholder="Full Name">
+  </div>
+  <input type="text" id="authUser" placeholder="Username">
+  <input type="password" id="authPass" placeholder="Password">
+  
+  <button type="button" id="btnAuthSubmit">Log In</button>
+  
+  <div class="toggle-wrap">
+    <span id="toggleText">Don't have an account?</span>
+    <button type="button" class="btn-link" id="toggleAuthMode">Register here</button>
+  </div>
+  <p style="font-size: 12px; color: #666; text-align: center; margin-top: 15px;">
+    Demo Account: <b>admin</b> / <b>1234</b>
+  </p>
+</div>
+
+<div class="box hidden" id="mainSystem">
+  <div class="topbar">
+    <div class="brand-flex">
+      <img src="logo.png" alt="LCC Logo" class="header-logo" onerror="this.style.display='none'">
+      <div>
+        <h3>La Conception College</h3>
+        <small>Student Information Management System</small>
+      </div>
+    </div>
+    <div class="user-info">
+      <span id="currentUserDisplay">Welcome!</span>
+      <button type="button" id="btnLogout" class="btn-del">Logout</button>
+    </div>
+  </div>
+
+  <div id="msg"></div>
+
+  <input type="text" id="sid" placeholder="Student ID (e.g. 20241762)">
+  <input type="text" id="sname" placeholder="Full Name">
+  <input type="text" id="scourse" placeholder="Course (e.g. BSIS 2A)">
+  <input type="number" id="sgwa" step="0.01" placeholder="GWA (1.00 - 5.00)">
+  <br>
+  <button type="button" id="btnAdd">Add Student</button>
+  <button type="button" id="btnUpdate" class="btn-warn">Update Existing</button>
+
+  <hr>
+  <input type="text" id="q" placeholder="Search ID or Name">
+  <br>
+  <button type="button" id="btnHash">Search ID (Hash Table)</button>
+  <button type="button" id="btnLinear">Search Name (Linear)</button>
+  <button type="button" id="btnSortName">Sort Name (Bubble)</button>
+  <button type="button" id="btnSortGwa">Sort GWA (Bubble)</button>
+  <button type="button" id="btnShowAll">Show All</button>
+  <button type="button" id="btnReset" class="btn-sec">Reset Default Data</button>
+
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Name</th><th>Course</th><th>GWA</th><th>Action</th></tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+
+  <h4>Activity History (Stack - LIFO)</h4>
+  <button type="button" id="btnUndo">Undo Last Delete (Pop)</button>
+  <div class="log" id="log"></div>
+</div>
+
+<script>
+const memStore = {};
+function safeGet(k) {
+  try { return localStorage.getItem(k); } catch (e) { return memStore[k] || null; }
+}
+function safeSet(k, v) {
+  try { localStorage.setItem(k, v); } catch (e) { memStore[k] = v; }
+}
+function safeRemove(k) {
+  try { localStorage.removeItem(k); } catch (e) { delete memStore[k]; }
+}
+
+let isRegisterMode = false;
+let users = JSON.parse(safeGet("sims_users_v1")) || [
+  { fullName: "System Admin", username: "admin", password: "1234" }
+];
+
+function saveUsers() {
+  safeSet("sims_users_v1", JSON.stringify(users));
+}
+
+function authNotify(text, isErr) {
+  const m = document.getElementById("authMsg");
+  m.style.display = "block";
+  m.style.background = isErr ? "#f8d7da" : "#d4edda";
+  m.style.color = isErr ? "#721c24" : "#155724";
+  m.innerText = text;
+}
+
+document.getElementById("toggleAuthMode").addEventListener("click", function() {
+  isRegisterMode = !isRegisterMode;
+  document.getElementById("authMsg").style.display = "none";
+  document.getElementById("authTitle").innerText = isRegisterMode ? "Create New Account" : "Student Information Management System";
+  document.getElementById("btnAuthSubmit").innerText = isRegisterMode ? "Register Account" : "Log In";
+  document.getElementById("btnAuthSubmit").className = isRegisterMode ? "btn-success" : "";
+  document.getElementById("regNameGroup").classList.toggle("hidden", !isRegisterMode);
+  document.getElementById("toggleText").innerText = isRegisterMode ? "Already have an account?" : "Don't have an account?";
+  document.getElementById("toggleAuthMode").innerText = isRegisterMode ? "Log in here" : "Register here";
+});
+
+document.getElementById("btnAuthSubmit").addEventListener("click", function() {
+  const user = document.getElementById("authUser").value.trim();
+  const pass = document.getElementById("authPass").value.trim();
+
+  if (isRegisterMode) {
+    const fullName = document.getElementById("regFullName").value.trim();
+    if (!fullName || !user || !pass) return authNotify("Error: Please fill in all fields!", true);
+    if (users.some(u => u.username.toLowerCase() === user.toLowerCase())) {
+      return authNotify("Error: That username is already taken!", true);
+    }
+    users.push({ fullName, username: user, password: pass });
+    saveUsers();
+    authNotify("Account created! You can now log in.", false);
+    document.getElementById("toggleAuthMode").click();
+  } else {
+    if (!user || !pass) return authNotify("Error: Please enter your username and password!", true);
+    const found = users.find(u => u.username === user && u.password === pass);
+    if (!found) return authNotify("Error: Invalid username or password!", true);
+
+    safeSet("sims_session_v1", JSON.stringify(found));
+    enterSystem(found);
+  }
+});
+
+function enterSystem(userObj) {
+  document.getElementById("authSection").classList.add("hidden");
+  document.getElementById("mainSystem").classList.remove("hidden");
+  document.getElementById("currentUserDisplay").innerText = "User: " + userObj.fullName;
+  loadData();
+}
+
+document.getElementById("btnLogout").addEventListener("click", function() {
+  safeRemove("sims_session_v1");
+  document.getElementById("mainSystem").classList.add("hidden");
+  document.getElementById("authSection").classList.remove("hidden");
+  document.getElementById("authUser").value = "";
+  document.getElementById("authPass").value = "";
+  authNotify("You have been logged out.", false);
+});
+
+const activeSession = JSON.parse(safeGet("sims_session_v1"));
+if (activeSession) {
+  enterSystem(activeSession);
+}
+
+let arr = [];
+let map = new Map();
+let delStack = [];
+let logStack = [];
+
+const defaultData = [
+  { id: "20241001", name: "Juan Dela Cruz", course: "BSIS 2A", gwa: 1.50 },
+  { id: "20241002", name: "Maria Clara", course: "BSIS 2A", gwa: 1.25 },
+  { id: "20241003", name: "Jose Rizal", course: "BSIS 2B", gwa: 1.75 }
+];
+
+function saveData() {
+  safeSet("sims_records_v3", JSON.stringify(arr));
+  safeSet("sims_logs_v3", JSON.stringify(logStack));
+}
+
+function loadData() {
+  const savedRecs = safeGet("sims_records_v3");
+  const savedLogs = safeGet("sims_logs_v3");
+
+  arr = savedRecs ? JSON.parse(savedRecs) : [...defaultData];
+  map.clear();
+  arr.forEach(s => map.set(s.id, s));
+
+  if (savedLogs) {
